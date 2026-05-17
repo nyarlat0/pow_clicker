@@ -1,0 +1,21 @@
+{
+    "name": "nyarlat0/pow-clicker",
+    "description": "Proof-of-work clicker web app",
+    "type": "project",
+    "license": "Unlicense",
+    "autoload": {
+        "psr-4": {
+            "Nyarlat0\\PowClicker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nyarlat",
+            "email": "nyarlat@nyarlat.org"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

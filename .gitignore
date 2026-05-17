@@ -1,0 +1,13 @@
+# PHP dependencies
+/vendor/
+
+# Secrets
+/.env
+
+# WASM / Rust build output
+/wasm/target/
+/public/pkg/
+
+# Tool caches
+/.php-cs-fixer.cache
+/.phpunit.result.cache

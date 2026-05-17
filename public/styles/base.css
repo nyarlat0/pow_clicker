@@ -1,0 +1,263 @@
+@font-face {
+  font-family: "Nunito";
+  src: url("/fonts/Nunito-VariableFont_wght.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    /* margin: 0; */
+  }
+
+  html {
+    scrollbar-gutter: stable both-edges;
+    hanging-punctuation: first last;
+  }
+
+  body {
+    margin: 0;
+    font:
+      400 1rem/1.5 "Nunito",
+      system-ui,
+      sans-serif;
+    text-wrap: pretty;
+    background: linear-gradient(
+      to bottom,
+      oklch(from var(--bg) calc(l + 0.1) c h),
+      oklch(from var(--bg) calc(l - 0.1) c h)
+    );
+    color: var(--ink);
+
+    --leptoaster-font-family: "Nunito";
+    --leptoaster-font-size: 1rem;
+
+    --leptoaster-info-background-color: var(--info);
+    --leptoaster-info-border-color: oklch(from var(--info) calc(l + 0.05) c h);
+    --leptoaster-info-text-color: var(--mes-ink);
+
+    --leptoaster-success-background-color: var(--success);
+    --leptoaster-success-border-color: oklch(
+      from var(--success) calc(l + 0.05) c h
+    );
+    --leptoaster-success-text-color: var(--mes-ink);
+
+    --leptoaster-error-background-color: var(--error);
+    --leptoaster-error-border-color: oklch(
+      from var(--error) calc(l + 0.05) c h
+    );
+    --leptoaster-error-text-color: var(--mes-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+  h1,
+  h2 {
+    text-align: center;
+  }
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+  h1 {
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+  }
+
+  input,
+  hr {
+    margin: 0;
+  }
+
+  input {
+    text-decoration: none;
+  }
+  hr {
+    margin-inline: -1rem;
+    border-color: oklch(from var(--muted) l c h / 80%);
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    background: var(--surface-deep);
+    border-style: solid;
+    border-color: transparent;
+    border-width: var(--s-5);
+    border-radius: var(--radius);
+    padding: var(--s-1);
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: var(--focus);
+    }
+  }
+
+  textarea {
+    min-height: 7cap;
+  }
+
+  label {
+    display: block;
+  }
+
+  a {
+    color: var(--brand);
+    text-decoration: none;
+
+    transition: color 0.2s;
+    &:hover {
+      color: var(--focus);
+      text-decoration: underline;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  :root {
+    --test-color: oklch(0 0 0);
+
+    /* c 0.11 lets l: 0.65 - 0.79 */
+    /* c 0.10 lets l: 0.59 - 0.80 */
+    /* c 0.09 lets l: 0.53 - 0.81 */
+    /* c 0.08 lets l: 0.48 - 0.83 */
+
+    /* variation 0.65 - 0.75 */
+    --light: calc(0.7 + var(--set-light, 0));
+    --hue: calc(350 + var(--set-hue, 0));
+
+    --brand: oklch(var(--light) 0.11 var(--hue));
+    --brand-weak: oklch(calc(var(--light) - 0.1) 0.11 var(--hue));
+
+    --focus: oklch(
+      from var(--brand) calc(l + 0.05) c h
+    ); /* variation 0.7 - 0.8 */
+
+    --cold-hue: calc(var(--hue) - 50);
+    --bg: oklch(
+      calc(var(--light) - 0.05) /* gradient variation 0.50 - 0.80 */ 0.08
+        var(--cold-hue)
+    );
+
+    --surface: oklch(
+      calc(var(--set-light, 0) + 0.95) 0 var(--cold-hue)
+    ); /* 0.9 - 1.0 */
+    --surface-high: oklch(from var(--surface) calc(l + 0.05) c h);
+    --surface-deep: oklch(from var(--surface) calc(l - 0.05) c h);
+    --golden: color-mix(in oklch, gold 40%, var(--surface));
+
+    --ink: oklch(from var(--surface) calc(l - 0.65) 0 var(--hue));
+    --muted: oklch(from var(--ink) calc(l - 0.15) c h);
+
+    --info: var(--bg);
+    --success: oklch(from var(--bg) l 0.08 calc(h - 180));
+    --error: oklch(from var(--bg) l 0.18 var(--hue));
+    --mes-ink: oklch(calc(0.95 + var(--set-light, 0)) 0 0);
+
+    --btn-color: var(--brand);
+
+    accent-color: var(--brand);
+
+    --ratio: 1.5;
+    --s-6: calc(var(--s-5) / var(--ratio));
+    --s-5: calc(var(--s-4) / var(--ratio));
+    --s-4: calc(var(--s-3) / var(--ratio));
+    --s-3: calc(var(--s-2) / var(--ratio));
+    --s-2: calc(var(--s-1) / var(--ratio));
+    --s-1: calc(var(--s0) / var(--ratio));
+    --s0: 1rem;
+    --s1: calc(var(--s0) * var(--ratio));
+    --s2: calc(var(--s1) * var(--ratio));
+    --s3: calc(var(--s2) * var(--ratio));
+    --s4: calc(var(--s3) * var(--ratio));
+    --s5: calc(var(--s4) * var(--ratio));
+
+    --radius: var(--s0);
+    --padding: var(--s-1) var(--s0);
+
+    --outline: var(--s-5) solid var(--focus);
+
+    --border: 2px solid oklch(from var(--surface) calc(l - 0.03) c h / 0.6);
+
+    --shadow-low: var(--s-4) var(--s-3) var(--s-3) oklch(0% 0 0 / 45%);
+    --shadow: var(--s-3) var(--s-2) var(--s-2) oklch(0% 0 0 / 40%);
+    --shadow-high: var(--s-2) var(--s-1) var(--s-1) oklch(0% 0 0 / 25%);
+  }
+
+  :root.light {
+    color-scheme: light;
+  }
+  :root.dark {
+    color-scheme: dark;
+    --bg: oklch(calc(var(--light) - 0.5) 0.08 var(--cold-hue));
+    --surface: oklch(calc(var(--set-light, 0) + 0.3) 0 0);
+    --ink: oklch(calc(0.95 + var(--set-light, 0)) 0 0);
+
+    --info: oklch(from var(--surface) calc(l + 0.05) c h);
+    --success: oklch(
+      calc(var(--set-light, 0) + 0.53) 0.08 calc(var(--cold-hue) - 180)
+    );
+    --error: oklch(calc(var(--set-light, 0) + 0.53) 0.18 var(--hue));
+  }
+
+  ::selection {
+    background: var(--focus);
+    color: oklch(from var(--focus) calc(1 - l) c h);
+  }
+  svg {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
+  @media print {
+    @page {
+      size: A4;
+      margin: 12mm;
+    }
+    nav,
+    aside,
+    .no-print {
+      display: none !important;
+    }
+    main {
+      break-inside: avoid;
+    }
+  }
+
+  /* High contrast / forced colors care */
+  @media (forced-colors: active) {
+    :root {
+      color: CanvasText;
+      background: Canvas;
+    }
+  }
+  @media (prefers-contrast: more) {
+    :root {
+      --bg: #111;
+      --ink: #fff;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none;
+    }
+  }
+}

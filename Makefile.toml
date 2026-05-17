@@ -1,0 +1,12 @@
+[tasks.wasm-build]
+description = "Build Rust WASM package for the browser"
+command = "wasm-pack"
+args = [
+    "build",
+    "--release",
+    "--target",
+    "web",
+    "--out-dir",
+    "../public/pkg",
+]
+cwd = "wasm"
