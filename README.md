@@ -5,6 +5,10 @@ Ed25519 private key, asks the PHP backend for short-lived authentication nonces
 and proof-of-work tasks, solves the task in WebAssembly, and submits the proof
 to increment the wallet balance.
 
+## Live demo
+
+You can try the project here: [pow.nyarlat.org](https://pow.nyarlat.org)
+
 ## What It Does
 
 - Creates, imports, exports, and stores a 32-byte private key in browser
