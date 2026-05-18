@@ -34,11 +34,17 @@ declare(strict_types=1);
     </div>
 
   <h3 id="wallet-balance"></h3>
-  <button id="solve-challenge-button" style="margin-top: auto; margin-bottom: auto; font-size: 2rem;" hidden>
+  <button id="solve-challenge-button" style="font-size: 2rem;" hidden>
     Click Me!
   </button>
   <div id="solve-spinner" class="loading-spinner" style="margin-top: auto; margin-bottom: auto; font-size: 2rem;" hidden></div>
-  <button id="export-private-key-button" style="margin-top: auto;" class="secondary" hidden>Export privkey</button>
+
+  <div class="stack" style="font-size: 0.7em; color: var(--muted);">
+  <p id=display-challenge></p>
+  <p id=display-work-nonce style="--stack-gap: var(--s-2);"></p>
+  <p id=display-hash style="--stack-gap: var(--s-2);"></p>
+  </div>
+  <button id="export-private-key-button" class="secondary" hidden>Export privkey</button>
   </div>
 
   </main>

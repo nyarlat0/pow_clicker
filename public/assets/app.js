@@ -19,6 +19,9 @@ const importButton = document.getElementById('import-private-key-button');
 const export_privkey_btn = document.getElementById('export-private-key-button');
 const solve_challenge_btn = document.getElementById('solve-challenge-button');
 const solve_spinner = document.getElementById('solve-spinner');
+const display_challenge = document.getElementById('display-challenge');
+const display_work_nonce = document.getElementById('display-work-nonce');
+const display_hash = document.getElementById('display-hash');
 
 await init();
 
@@ -194,6 +197,12 @@ async function exportPrivateKeyToClipboard() {
   await navigator.clipboard.writeText(privateKey);
 }
 
+function nextFrame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(resolve);
+  });
+}
+
 async function solveChallenge() {
   solve_challenge_btn.hidden = true;
   solve_spinner.hidden = false;
@@ -201,7 +210,19 @@ async function solveChallenge() {
   const publicKey = public_key_from_private_key(privateKey);
 
   const challenge = await getChallenge(privateKey, publicKey);
-  const work_nonce = solve_challenge(challenge, 5);
+  display_challenge.textContent = `Got challenge: 0x${challenge}`;
+  display_work_nonce.textContent = ``;
+  display_hash.textContent = ``;
+  await nextFrame();
+  await nextFrame();
+
+  const work_res = solve_challenge(challenge, 5);
+  const work_nonce = work_res.work_nonce;
+  const combined_num = work_res.combined_num;
+  const hash = work_res.hash;
+
+  display_work_nonce.textContent = `Found work-nonce: ${work_nonce}`
+  display_hash.textContent = `hash( 0x${combined_num} ) = 0x${hash}`
 
   await submitProof(privateKey, publicKey, work_nonce);
 }

@@ -50,9 +50,19 @@ if (!$challenge) {
     rejectInvalidProof();
 }
 
-$work_nonce = $input['message'];
+$challengeBytes = hex2bin($challenge);
 
-$hash = hash('sha256', $challenge . $work_nonce);
+if ($challengeBytes === false) {
+    rejectInvalidProof();
+}
+
+$workNonce = $input['message'];
+$nonceBytes = pack('J', (int) $workNonce); // unsigned 64-bit big-endian
+
+$hash = hash('sha256', $challengeBytes . $nonceBytes);
+
+
+$hash = hash('sha256', $challengeBytes . $nonceBytes);
 $requiredZeroHexChars = 5;
 
 if (!str_starts_with($hash, str_repeat('0', $requiredZeroHexChars))) {

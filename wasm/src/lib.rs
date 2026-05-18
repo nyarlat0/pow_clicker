@@ -1,6 +1,14 @@
 use ed25519_dalek::{Signer, SigningKey, VerifyingKey};
+use serde::Serialize;
 use sha2::{Digest, Sha256};
 use wasm_bindgen::prelude::*;
+
+#[derive(Serialize)]
+pub struct PowResult {
+    work_nonce: String,
+    combined_num: String,
+    hash: String,
+}
 
 #[wasm_bindgen]
 pub fn generate_private_key() -> Result<String, JsValue> {
@@ -48,19 +56,38 @@ pub fn sign_message(nonce: &str, private_key_hex: &str, message: &str) -> Result
 }
 
 #[wasm_bindgen]
-pub fn solve_challenge(challenge: &str, num_zeroes: usize) -> String {
+pub fn solve_challenge(challenge_hex: &str, num_zeroes: usize) -> Result<JsValue, JsValue> {
+    let challenge_bytes =
+        hex::decode(challenge_hex).map_err(|_| JsValue::from_str("Invalid hex"))?;
+
     let required_prefix = "0".repeat(num_zeroes);
 
     let mut work_nonce: u64 = 0;
 
     loop {
-        let input = format!("{challenge}{work_nonce}");
+        let mut hasher = Sha256::new();
+        let nonce_bytes = work_nonce.to_be_bytes();
 
-        let hash = Sha256::digest(input.as_bytes());
+        hasher.update(&challenge_bytes);
+        hasher.update(nonce_bytes);
+
+        let hash = hasher.finalize();
         let hash_hex = hex::encode(hash);
 
         if hash_hex.starts_with(&required_prefix) {
-            return work_nonce.to_string();
+            let nonce_bytes = work_nonce.to_be_bytes();
+            let mut combined = Vec::with_capacity(challenge_bytes.len() + nonce_bytes.len());
+            combined.extend_from_slice(&challenge_bytes);
+            combined.extend_from_slice(&nonce_bytes);
+
+            let result = PowResult {
+                work_nonce: work_nonce.to_string(),
+                combined_num: hex::encode(combined),
+                hash: hash_hex,
+            };
+
+            return serde_wasm_bindgen::to_value(&result)
+                .map_err(|err| JsValue::from_str(&err.to_string()));
         }
 
         work_nonce += 1;
